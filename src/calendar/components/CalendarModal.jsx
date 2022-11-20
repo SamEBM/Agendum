@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Modal from 'react-modal';
 import { addHours, differenceInSeconds } from 'date-fns';
 
@@ -9,6 +9,7 @@ import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/es';
 import { useUIStore } from '../../hooks/useUIStore';
+import { useCalendarStore } from '../../hooks';
 registerLocale('es', es);
 
 const customStyles = {
@@ -28,6 +29,7 @@ export const CalendarModal = ({ language }) => {
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const {isDateModalOpen, closeDateModal} = useUIStore();
+    const {activeEvent, startSavingEvent} = useCalendarStore();
 
     const [formValues, setFormValues] = useState({
         title: 'New Event',
@@ -41,6 +43,14 @@ export const CalendarModal = ({ language }) => {
 
         return formValues.title.length > 0 ? '' : 'is-invalid'
     }, [formValues.title, setFormSubmitted]);
+
+
+    useEffect(() => {
+        if (activeEvent !== null ){
+            setFormValues({...activeEvent});
+        }
+    }, [activeEvent])
+    
 
     const onInputChange = ({target}) => {
         setFormValues({
@@ -60,7 +70,7 @@ export const CalendarModal = ({ language }) => {
         closeDateModal();
     }
 
-    const onSubmit = (event) => {
+    const onSubmit = async(event) => {
         event.preventDefault();
         setFormSubmitted(true);
 
@@ -73,14 +83,15 @@ export const CalendarModal = ({ language }) => {
 
         if (formValues.title.length <= 0) return Swal.fire('Missing title', 'Event title is required', 'error');;
 
-        console.log(formValues);
+        console.log({"Formulario" : formValues});
 
-        //TODO:
-        // Cerrar modal, remover errores en pantalla
+        await startSavingEvent(formValues);
+        closeDateModal();
+        setFormSubmitted(false);
     }
 
     return (
-        <Modal className="modal"
+        <Modal className="modal animate__animated animate__fadeIn"
             isOpen={isDateModalOpen}
             onRequestClose={onCloseModal}
             style={customStyles}

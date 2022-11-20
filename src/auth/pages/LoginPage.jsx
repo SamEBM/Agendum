@@ -3,10 +3,11 @@ import './LoginPage.css';
 
 export const LoginPage = () => {
     return (
-        <div className="container login-container">
+        <div className='app-background'>
+            <div className="container login-container">
             <div className="row">
                 <div className="col-md-6 login-form-1">
-                    <h3>Login</h3>
+                    <h1>Login</h1>
                     <form>
                         <div className="form-group mb-2">
                             <input 
@@ -33,7 +34,7 @@ export const LoginPage = () => {
                 </div>
 
                 <div className="col-md-6 login-form-2">
-                    <h3>Sign Up</h3>
+                    <h1>Sign Up</h1>
                     <form>
                         <div className="form-group mb-2">
                             <input
@@ -74,6 +75,7 @@ export const LoginPage = () => {
                     </form>
                 </div>
             </div>
+        </div>
         </div>
     )
 }
