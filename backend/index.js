@@ -22,6 +22,7 @@ app.use(express.json());
 
 // Autenticación
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/events', require('./routes/events'));
 
 // CRUD de eventos
 
