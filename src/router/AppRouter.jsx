@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import Swal from 'sweetalert2';
 import { LoginPage } from '../auth';
 import { CalendarPage } from '../calendar';
 import { useAuthStore } from '../hooks';
@@ -14,9 +15,17 @@ export const AppRouter = () => {
     
 
     if (status === 'checking') {
-        return (
-            <h1>Loading...</h1>
-        )
+        Swal.fire({
+            title: 'Getting calendar events...',
+            timer: 2000,
+            didOpen: () => {
+                Swal.showLoading()
+            },
+            willClose: () => {
+                clearInterval(1000)
+            }
+        });
+        return <></>
     }
 
     return (

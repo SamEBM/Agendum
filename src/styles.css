@@ -45,6 +45,7 @@
   padding: 15px;
   position: fixed;
   right: 25px;
+  z-index: 5;
 }
 
 .fab-danger {
@@ -55,4 +56,5 @@
   left: 25px;
   width: 60px;
   height: 60px;
+  z-index: 5;
 }

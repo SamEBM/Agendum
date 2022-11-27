@@ -83,8 +83,6 @@ export const CalendarModal = ({ language }) => {
 
         if (formValues.title.length <= 0) return Swal.fire('Missing title', 'Event title is required', 'error');;
 
-        console.log({"Formulario" : formValues});
-
         await startSavingEvent(formValues);
         closeDateModal();
         setFormSubmitted(false);
@@ -101,10 +99,16 @@ export const CalendarModal = ({ language }) => {
             <h1 className="text-center mt-2">
                 <i className="fas fa-calendar-check"></i>
                 &nbsp;
-                New Event
+                Event
             </h1>
             <hr />
             <form className="container" onSubmit={onSubmit}>
+
+                <div className='text-center fs-4'>
+                    <div className='badge bg-primary'>
+                        {activeEvent?.user.name}
+                    </div>
+                </div>
 
                 <div className="form-group mb-3">
                     <label>Start date</label>
@@ -156,10 +160,7 @@ export const CalendarModal = ({ language }) => {
                     <small id="emailHelp" className="form-text text-muted p-2">Additional Information</small>
                 </div>
 
-                <button
-                    type="submit"
-                    className="btn btn-outline-dark btn-block"
-                >
+                <button type="submit" className="btn btn-outline-dark btn-block">
                     <i className="far fa-save"></i>
                     <span> Save</span>
                 </button>
